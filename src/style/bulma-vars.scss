@@ -1,0 +1,9 @@
+@import 'bulma/sass/utilities/_all.sass';
+
+:export {
+  mobile: 0;
+  tablet: 769;
+  desktop: 1024;
+  widescreen: 1216;
+  fullhd: 1408;
+}
