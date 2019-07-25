@@ -148,6 +148,7 @@
 import VueMarkdown from 'vue-markdown'
 import deepmerge from 'deepmerge'
 import URI from 'urijs'
+import { throttle } from 'lodash'
 
 import BulmaMixin from '@/components/bulma-mixin'
 import PolyfilledStorage from '@/js/polyfilled-storage'
@@ -196,11 +197,11 @@ export default {
     }
   },
   methods: {
-    async commonUpdate (key, value) {
+    commonUpdate: throttle(async function (key, value) {
       await PolyfilledStorage.sync.set({ [key]: value })
       const evt = new CustomEvent('update-vars', { detail: { data: { key } } })
       this.bgWindow.dispatchEvent(evt)
-    },
+    }, 300),
     async getOpts (key, defaults) {
       let storedOpts = '{}'
       try {
@@ -248,7 +249,7 @@ export default {
   async created () {
     window.PolyfilledStorage = PolyfilledStorage
 
-    this.bgWindow = browser.extension.getBackgroundPage()
+    this.bgWindow = await browser.extension.getBackgroundPage()
 
     const generalOpts = await this.getOpts('general', defaultGeneralOpts)
     this.$set(this, 'general', generalOpts)
