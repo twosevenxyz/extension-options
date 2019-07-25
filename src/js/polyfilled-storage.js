@@ -1,11 +1,10 @@
-import is from 'is_js'
-
 // Chrome expects a callback whereas firefox returns a promise
-
+// But because Firefox polyfills window.chrome to be equivalent to Chrome's implementation
+// and because we do browser = window.chrome || window.browser, we're always using
+// the chrome implementation
 let polyfilledStorage
 ;(() => {
   const browser = window.chrome || window.browser
-  const isChrome = is.chrome()
 
   class PolyfilledStorageArea {
     constructor (name) {
@@ -13,12 +12,9 @@ let polyfilledStorage
       this.storageArea = browser.storage[name]
     }
     commonHandle (fn, ...args) {
-      if (isChrome) {
-        return new Promise(function (resolve, reject) {
-          fn.call(this.storageArea, ...args, resolve)
-        }.bind(this))
-      }
-      return fn.call(this.storageArea, ...args)
+      return new Promise(function (resolve, reject) {
+        fn.call(this.storageArea, ...args, resolve)
+      }.bind(this))
     }
 
     get (...args) {

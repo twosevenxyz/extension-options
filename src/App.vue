@@ -198,14 +198,15 @@ export default {
   },
   methods: {
     commonUpdate: throttle(async function (key, value) {
-      await PolyfilledStorage.sync.set({ [key]: value })
+      await PolyfilledStorage.local.set({ [key]: value })
       const evt = new CustomEvent('update-vars', { detail: { data: { key } } })
       this.bgWindow.dispatchEvent(evt)
     }, 300),
     async getOpts (key, defaults) {
       let storedOpts = '{}'
       try {
-        storedOpts = (await PolyfilledStorage.sync.get(key))[key] || '{}'
+        const obj = (await PolyfilledStorage.local.get(key))
+        storedOpts = obj[key] || '{}'
       } catch (e) {
         console.error(e)
       }
