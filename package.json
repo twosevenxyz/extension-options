@@ -15,8 +15,10 @@
     "core-js": "^2.6.5",
     "deepmerge": "^4.0.0",
     "is_js": "^0.9.0",
+    "urijs": "^1.19.1",
     "vue": "^2.6.10",
-    "vue-markdown": "^2.2.4"
+    "vue-markdown": "^2.2.4",
+    "vue-material-design-icons": "^3.3.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.0",

@@ -7,7 +7,8 @@ import is from 'is_js'
     if (is.chrome()) {
       commonAPI = {
         async get (key, cb) {
-          cb(localStorage.getItem(key))
+          const result = { [key]: localStorage.getItem(key) }
+          cb(result)
         },
         async set (data, cb) {
           Object.entries(data).forEach(([key, value]) => {

@@ -40,13 +40,11 @@
                       <div class="field option">
                         <div class="control">
                           <span class="label">Time to spend trying to find media</span>
-                          <input id="general-mediaSearchDurationSec" class="slider" step="1" min="30" max="300" type="range" v-model="general.mediaSearchDurationSec">
+                          <input id="general-mediaSearchDurationSec" class="slider inline-slider" step="1" min="30" max="300" type="range" v-model="general.mediaSearchDurationSec">
                           <output for="general-mediaSearchDurationSec">{{ general.mediaSearchDurationSec }}</output>
-                          <p class="info">
-                            The amount of time to spend searching for videos on third-party websites. If you're running into errors, Try moving the slider up to increase the time
-                            that the extension will spend trying to wait for the website to load the video.
-                          </p>
-                          <VueMarkdown class="info">If increasing this timer does not help, you could also try [showing the frame](#general-showIframeOnWebsites) on certain websites to take a look at what is going on.</VueMarkdown>
+                          <VueMarkdown class="info">The amount of time to spend searching for videos on third-party websites. If you're running into errors, Try moving the slider up to increase the time
+                            that the extension will spend trying to wait for the website to load the video. If increasing this timer does not help, you could also try [showing the frame](#general-showIframeOnWebsites) on certain websites to take a look at what is going on.
+                          </VueMarkdown>
                         </div>
                       </div>
 
@@ -65,12 +63,19 @@
                         <div class="field-body">
                           <div class="field has-addons">
                             <div class="control">
-                              <input class="input is-primary is-small" type="text" placeholder="e.g. crunchyroll.com">
+                              <input class="input is-small" :class="[isValidIframeWebsite ? 'is-primary' : 'is-danger']" ref="showIframeOnWebsiteInput" ype="text" placeholder="e.g. crunchyroll.com" style="width: fit-content;" @keyup.enter.stop.cancel="addShowIframeOnWebsite($event.target.value)" @keyup="checkValidIframeWebsite">
                             </div>
                             <div class="control">
-                              <a class="button is-primary is-small">
-                                Add Website
-                              </a>
+                              <a class="button is-primary is-small" @click="addShowIframeOnWebsite($refs.showIframeOnWebsiteInput.value)" :disabled="!isValidIframeWebsite"> Add Website </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="columns website-list">
+                        <div class="column is-one-third">
+                          <div class="list is-hoverable">
+                            <div class="list-item" v-for="(entry, $index) in general.showIframeOnWebsites" :key="$index">
+                              <ListEntry :value="entry" @remove="general.showIframeOnWebsites.splice($index, 1)"/>
                             </div>
                           </div>
                         </div>
@@ -86,7 +91,7 @@
                         <label class="checkbox">
                           <input type="checkbox" v-model="youtube.disableCaptions">
                           Try to disable captions
-                          <p class="info">Check this box if you want TwoSeven to try and stop showing captions on twoseven.xyz </p>
+                          <p class="info">Check this box if you want to stop showing YouTube captions when watching YouTube videos on twoseven.xyz</p>
                         </label>
                       </div>
                     </div>
@@ -134,32 +139,23 @@
 <script>
 import VueMarkdown from 'vue-markdown'
 import deepmerge from 'deepmerge'
+import URI from 'urijs'
 
 import BulmaMixin from '@/components/bulma-mixin'
-import Storage from '@/js/polyfilled-storage'
+import PolyfilledStorage from '@/js/polyfilled-storage'
+import defaultSettings from '@/js/default-settings'
+import ListEntry from '@/components/list-entry'
 
 const browser = window.chrome || window.browser
 
-const defaultGeneralOpts = {
-  mediaSearchDurationSec: 30,
-  hideSearchIframe: true,
-  showIframeOnWebsites: []
-}
-
-const defaultPlexOpts = {
-  forceWAN: true,
-  allowDirectPlay: false
-}
-
-const defaultYouTubeOpts = {
-  disableCaptions: false
-}
+const { defaultGeneralOpts, defaultYouTubeOpts, defaultPlexOpts } = defaultSettings
 
 export default {
   name: 'app',
   mixins: [BulmaMixin],
   components: {
-    VueMarkdown
+    VueMarkdown,
+    ListEntry
   },
   watch: {
     youtube: {
@@ -187,29 +183,62 @@ export default {
       bgWindow: undefined,
       general: undefined,
       youtube: undefined,
-      plex: undefined
+      plex: undefined,
+      isValidIframeWebsite: true
     }
   },
   methods: {
     async commonUpdate (key, value) {
-      await Storage.sync.set({ [key]: value })
+      await PolyfilledStorage.sync.set({ [key]: value })
       const evt = new CustomEvent('update-vars', { detail: { data: { key } } })
       this.bgWindow.dispatchEvent(evt)
     },
     async getOpts (key, defaults) {
       let storedOpts = '{}'
       try {
-        storedOpts = (await Storage.sync.get(key))[key] || '{}'
+        storedOpts = (await PolyfilledStorage.sync.get(key))[key] || '{}'
       } catch (e) {
         console.error(e)
       }
       storedOpts = JSON.parse(storedOpts)
       const finalOpts = deepmerge(defaults, storedOpts)
       return finalOpts
+    },
+    addShowIframeOnWebsite (website) {
+      this.general.showIframeOnWebsites.push(website)
+    },
+    checkValidIframeWebsite ({ target }) {
+      const { value } = target
+      if (value === '') {
+        this.isValidIframeWebsite = true
+        return
+      }
+      try {
+        let url = value
+        if (!url.startsWith('http')) {
+          url = `http://${url}`
+        }
+        if (!url.includes('.')) {
+          this.isValidIframeWebsite = false
+          return
+        }
+        const uri = new URI(url)
+        if (!uri.tld()) {
+          this.isValidIframeWebsite = false
+          return
+        }
+        const host = uri.host()
+        const tld = uri.tld()
+        url = uri.toString()
+        const path = url.substring(uri.origin().length)
+        this.isValidIframeWebsite = (host && tld && ['', '/'].includes(path))
+      } catch (e) {
+        this.isValidIframeWebsite = false
+      }
     }
   },
   async created () {
-    window.PolyfilledStorage = Storage
+    window.PolyfilledStorage = PolyfilledStorage
 
     this.bgWindow = browser.extension.getBackgroundPage()
 
@@ -235,6 +264,10 @@ export default {
   display: flex;
   flex-direction: column;
   flex: 1;
+
+  input {
+    font-family: 'Roboto', sans-serif !important;
+  }
 }
 
 .navbar {
@@ -268,9 +301,10 @@ export default {
 .info {
   margin-top: 4px;
   margin-bottom: 0;
-  font-size: 0.9em;
+  font-size: 14px;
   color: #6a6a6a;
   > /deep/ p {
+    font-size: 14px;
     margin: 0;
   }
 }
@@ -281,17 +315,34 @@ export default {
 
 .field {
   .field-label {
+    text-align: left;
     flex-grow: 1.5;
+    margin-right: 1em;
   }
-  input[type='range'] {
+  input[type='range'].inline-slider {
     width: 180px;
+    margin-bottom: 8px;
+    vertical-align: bottom;
   }
-  span.label + input {
-    margin-left: 12px;
+  span.label {
+    display: inline-flex;
+   & + input {
+     margin-left: 12px;
+    }
   }
   input[type='range'] + output {
     margin-left: 12px;
   }
+  input.is-small {
+    @if variable-exists(VUE_APP_MODE) == false {
+      font-size: unset;
+    }
+  }
+}
 
+.website-list {
+  .list-item:not(:last-child) {
+    margin-bottom: 12px;
+  }
 }
 </style>
