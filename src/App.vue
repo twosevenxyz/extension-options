@@ -58,7 +58,7 @@
                           You probably want to leave this box checked, and instead [show the frame](#general-showIframeOnWebsites) on specific websites.</VueMarkdown>
                       </div>
 
-                      <div class="field is-horizontal option">
+                      <div class="field is-horizontal option is-marginless">
                         <div id="general-showIframeOnWebsites" class="field-label">Show frames on specific websites</div>
                         <div class="field-body">
                           <div class="field has-addons">
@@ -69,6 +69,14 @@
                               <a class="button is-primary is-small" @click="addShowIframeOnWebsite($refs.showIframeOnWebsiteInput.value)" :disabled="!isValidIframeWebsite"> Add Website </a>
                             </div>
                           </div>
+                        </div>
+                      </div>
+                      <div class="columns is-marginless option-info">
+                        <div class="column" style="padding: 0 0 8px 0;">
+                          <p class="info">
+                            Some websites require you to interact with them before they begin to load or play the video. Add such websites to this list so that you get a chance to manually engage with the website
+                            and do whatever is necessary to help the TwoSeven extension detect the video file.
+                          </p>
                         </div>
                       </div>
                       <div class="columns website-list">
@@ -119,9 +127,9 @@
                         Allow MP4 files to directPlay
                         <p class="info">
                           By default, TwoSeven forces Plex to transcode all files; even the ones that can be played directly (since they're in MP4 format).
-                          This is done to ensure that your Plex Token is not leaked to the other participants in the room.
-                          <span v-if="plex.allowDirectPlay">Uncheck this box if you want to ensure full security of your token</span>
-                          <span v-else>Check this box if you fully trust everyone you're watching the video with and want high-quality rather than high-security</span>
+                          This is done to ensure that your Plex Token is not leaked to the other participants in the room. <br>
+                          <span class="has-text-danger">Check this box if you fully trust everyone you're watching the video with and want high-quality rather than high-security. </span> <br>
+                          Uncheck this box if you want to ensure full security of your token.
                         </p>
                       </label>
                     </div>
