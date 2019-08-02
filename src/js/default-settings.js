@@ -10,7 +10,8 @@ const defaultYouTubeOpts = {
 
 const defaultPlexOpts = {
   forceWAN: true,
-  allowDirectPlay: false
+  allowDirectPlay: false,
+  enableSessionPing: false
 }
 
 export default {
