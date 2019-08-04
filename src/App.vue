@@ -316,7 +316,7 @@ export default {
     display: none;
     visibility: hidden;
     opacity: 0;
-    transition: visibility 3s, opacity 1s linear;
+    transition: opacity 0.3s linear;
   }
   > div.is-active {
     display: block;
