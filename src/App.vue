@@ -43,7 +43,7 @@
                           <input id="general-mediaSearchDurationSec" class="slider inline-slider" step="1" min="30" max="300" type="range" v-model="general.mediaSearchDurationSec">
                           <output for="general-mediaSearchDurationSec">{{ general.mediaSearchDurationSec }}</output>
                           <VueMarkdown class="info">The amount of time to spend searching for videos on third-party websites. If you're running into errors, Try moving the slider up to increase the time
-                            that the extension will spend trying to wait for the website to load the video. If increasing this timer does not help, you could also try [showing the frame](#general-showIframeOnWebsites) on certain websites to take a look at what is going on.
+                            If increasing this timer does not help, you could also try [showing the frame](#general-showIframeOnWebsites) on certain websites to take a look at what is going on.
                           </VueMarkdown>
                         </div>
                       </div>
