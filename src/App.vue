@@ -37,12 +37,13 @@
                   <div v-if="general" class="container">
                     <h3 id="extension-opts" class="title is-3">Detecting Videos</h3>
                     <div class="content">
+                      <span class="info">These options come into play when another user loads a video into a room but the video does not load for you.</span>
                       <div class="field option">
                         <div class="control">
-                          <span class="label">Time to spend trying to find media</span>
+                          <span class="label"># Seconds to find media</span>
                           <input id="general-mediaSearchDurationSec" class="slider inline-slider" step="1" min="30" max="300" type="range" v-model="general.mediaSearchDurationSec">
                           <output for="general-mediaSearchDurationSec">{{ general.mediaSearchDurationSec }}</output>
-                          <VueMarkdown class="info">The amount of time to spend searching for videos on third-party websites. If you're running into errors, Try moving the slider up to increase the time
+                          <VueMarkdown class="info">The amount of time to spend searching for videos on third-party websites. If you're running into errors, try moving the slider up to increase the time
                             If increasing this timer does not help, you could also try [showing the frame](#general-showIframeOnWebsites) on certain websites to take a look at what is going on.
                           </VueMarkdown>
                         </div>
@@ -51,15 +52,15 @@
                       <div class="field option">
                         <label class="checkbox">
                           <input type="checkbox" v-model="general.hideSearchIframe">
-                          Hide the frame in which third-party videos are detected
+                          <span class="label">Hide the frame in which third-party videos are detected</span>
+                          <VueMarkdown class="info">If you uncheck this box, twoseven will show you a new window every time another participant in a room loads a video from a third-party website.
+                            Leaving this box checked will instead create a hidden frame and try to perform the video detection silently.
+                            You probably want to leave this box checked, and instead [show the frame](#general-showIframeOnWebsites) on specific websites.</VueMarkdown>
                         </label>
-                        <VueMarkdown class="info">If you uncheck this box, twoseven will show you a new window every time another participant in a room loads a video from a third-party website.
-                          Leaving this box checked will instead create a hidden frame and try to perform the video detection silently.
-                          You probably want to leave this box checked, and instead [show the frame](#general-showIframeOnWebsites) on specific websites.</VueMarkdown>
                       </div>
 
                       <div class="field is-horizontal option is-marginless">
-                        <div id="general-showIframeOnWebsites" class="field-label">Show frames on specific websites</div>
+                        <div id="general-showIframeOnWebsites" class="field-label label" style="margin-top: auto; margin-bottom: auto;">Show frames on specific websites</div>
                         <div class="field-body">
                           <div class="field has-addons">
                             <div class="control">
@@ -98,7 +99,7 @@
                       <div class="field option">
                         <label class="checkbox">
                           <input type="checkbox" v-model="youtube.disableCaptions">
-                          Try to disable captions
+                          <span class="label">Try to disable captions</span>
                           <p class="info">Check this box if you want to stop showing YouTube captions when watching YouTube videos on twoseven.xyz</p>
                         </label>
                       </div>
@@ -115,7 +116,7 @@
                     <div class="field option">
                       <label class="checkbox">
                         <input type="checkbox" v-model="plex.forceWAN">
-                        Force Plex to use only WAN address
+                        <span class="label">Force Plex to use only WAN address</span>
                         <p class="info">Sometimes, Plex may connect to your Plex Media Server (PMS) using a LAN IP. If this occurs, everyone outside of your LAN will not be able
                           to connect or watch the video together on TwoSeven. <br>
                           Check this box to ensure that all connections to your Plex Media Server happen using its WAN (internet) IP address.
@@ -126,7 +127,7 @@
                     <div class="field option">
                       <label class="checkbox">
                         <input type="checkbox" v-model="plex.allowDirectPlay">
-                        Allow MP4 files to directPlay
+                        <span class="label">Allow MP4 files to directPlay</span>
                         <p class="info">
                           By default, TwoSeven forces Plex to transcode all files; even the ones that can be played directly (since they're in MP4 format).
                           This is done to ensure that your Plex Token is not leaked to the other participants in the room. <br>
@@ -139,7 +140,7 @@
                     <div class="field option">
                       <label class="checkbox">
                         <input type="checkbox" v-model="plex.enableSessionPing">
-                        Keep the Plex transcoder-session alive even after the Plex tab is closed <span class="has-text-danger is-size-7">experimental</span>
+                        <span class="label">Keep the Plex transcoder-session alive even after the Plex tab is closed <span class="experimental has-text-danger is-size-7">experimental</span> </span>
                         <p class="info">The Plex website periodically pokes and prods (pings) your Plex Media Server to keep the current video transcoding session alive.
                           If the session terminates, then the video will stop playing.
                           The session normally closes within ~10 minutes of closing the Plex website. <br>
@@ -364,6 +365,12 @@ export default {
       font-size: unset;
     }
   }
+}
+
+.experimental {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 6px;
 }
 
 .website-list {
