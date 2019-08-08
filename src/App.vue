@@ -41,7 +41,7 @@
                       <div class="field option">
                         <div class="control">
                           <span class="label"># Seconds to find media</span>
-                          <input id="general-mediaSearchDurationSec" class="slider inline-slider" step="1" min="30" max="300" type="range" v-model="general.mediaSearchDurationSec">
+                          <input id="general-mediaSearchDurationSec" class="slider inline-slider" step="3" min="10" max="120" type="range" v-model="general.mediaSearchDurationSec">
                           <output for="general-mediaSearchDurationSec">{{ general.mediaSearchDurationSec }}</output>
                           <VueMarkdown class="info">The amount of time to spend searching for videos on third-party websites. If you're running into errors, try moving the slider up to increase the time
                             If increasing this timer does not help, you could also try [showing the frame](#general-showIframeOnWebsites) on certain websites to take a look at what is going on.
