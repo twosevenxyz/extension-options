@@ -1,7 +1,11 @@
 const defaultGeneralOpts = {
-  mediaSearchDurationSec: 30,
+  mediaSearchDurationSec: 15,
   hideSearchIframe: true,
-  showIframeOnWebsites: []
+  showIframeOnWebsites: [
+  ],
+  loadTopFrameOnWebsites: [
+    'prettyfast.to'
+  ]
 }
 
 const defaultYouTubeOpts = {
