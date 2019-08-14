@@ -4,7 +4,8 @@ const defaultGeneralOpts = {
   showIframeOnWebsites: [
   ],
   loadTopFrameOnWebsites: [
-    'prettyfast.to'
+    'prettyfast.to',
+    'rapidvideo.com'
   ]
 }
 
