@@ -23,6 +23,9 @@
                 <li :class="{'is-active': currentTab === 'plex'}" data-target="plex" @click="currentTab = 'plex'">
                   <a>Plex</a>
                 </li>
+                <li :class="{'is-active': currentTab === 'crunchyroll'}" data-target="crunchyroll" @click="currentTab = 'crunchyroll'">
+                  <a>Crunchyroll</a>
+                </li>
               </ul>
             </div>
           </div>
@@ -153,6 +156,11 @@
                   </div>
                 </section>
               </div>
+
+              <!-- Crunchyroll -->
+              <div v-if="crunchyroll" :class="{'is-active': currentTab === 'crunchyroll'}" data-content="crunchyroll">
+                <CheckboxSwitch v-model="crunchyroll.forceHardSub" label="Use hardsub streams over subtitles" extra-info="Hardsub streams are videos with subtitles burned into the video. Use this when subtitles are not detected or if they're not working correctly"/>
+              </div>
             </div>
           </div>
         </div>
@@ -171,17 +179,19 @@ import BulmaMixin from '@/components/bulma-mixin'
 import PolyfilledStorage from '@/js/polyfilled-storage'
 import defaultSettings from '@/js/default-settings'
 import ListEntry from '@/components/list-entry'
+import CheckboxSwitch from '@/components/checkbox-switch'
 
 const browser = window.chrome || window.browser
 
-const { defaultGeneralOpts, defaultYouTubeOpts, defaultPlexOpts } = defaultSettings
+const { defaultGeneralOpts, defaultYouTubeOpts, defaultPlexOpts, defaultCrunchyrollOpts } = defaultSettings
 
 export default {
   name: 'app',
   mixins: [BulmaMixin],
   components: {
     VueMarkdown,
-    ListEntry
+    ListEntry,
+    CheckboxSwitch
   },
   watch: {
     youtube: {
@@ -201,6 +211,12 @@ export default {
         this.commonUpdate('general', JSON.stringify(newVal))
       },
       deep: true
+    },
+    crunchyroll: {
+      handler: function (newVal) {
+        this.commonUpdate('crunchyroll', JSON.stringify(newVal))
+      },
+      deep: true
     }
   },
   data () {
@@ -210,6 +226,7 @@ export default {
       general: undefined,
       youtube: undefined,
       plex: undefined,
+      crunchyroll: undefined,
       isValidIframeWebsite: true,
       targets: new Set([
         '#general-showIframeOnWebsites-wrapper'
@@ -293,6 +310,9 @@ export default {
 
     const plexOpts = await this.getOpts('plex', defaultPlexOpts)
     this.$set(this, 'plex', plexOpts)
+
+    const crOpts = await this.getOpts('crunchyroll', defaultCrunchyrollOpts)
+    this.$set(this, 'crunchyroll', crOpts)
   },
   mounted () {
     window.addEventListener('hashchange', this.onHashChange)

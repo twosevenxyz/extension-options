@@ -19,8 +19,13 @@ const defaultPlexOpts = {
   enableSessionPing: false
 }
 
+const defaultCrunchyrollOpts = {
+  forceHardSub: false
+}
+
 export default {
   defaultGeneralOpts,
   defaultYouTubeOpts,
-  defaultPlexOpts
+  defaultPlexOpts,
+  defaultCrunchyrollOpts
 }
