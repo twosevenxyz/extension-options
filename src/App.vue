@@ -44,7 +44,7 @@
                           <input id="general-mediaSearchDurationSec" class="slider inline-slider" step="3" min="10" max="120" type="range" v-model="general.mediaSearchDurationSec">
                           <output for="general-mediaSearchDurationSec">{{ general.mediaSearchDurationSec }}</output>
                           <VueMarkdown class="info">The amount of time to spend searching for videos on third-party websites. If you're running into errors, try moving the slider up to increase the time
-                            If increasing this timer does not help, you could also try [showing the frame](#general-showIframeOnWebsites) on certain websites to take a look at what is going on.
+                            If increasing this timer does not help, you could also try [showing the frame](#general-showIframeOnWebsites-wrapper) on certain websites to take a look at what is going on.
                           </VueMarkdown>
                         </div>
                       </div>
@@ -55,11 +55,11 @@
                           <span class="label">Hide the frame in which third-party videos are detected</span>
                           <VueMarkdown class="info">If you uncheck this box, twoseven will show you a new window every time another participant in a room loads a video from a third-party website.
                             Leaving this box checked will instead create a hidden frame and try to perform the video detection silently.
-                            You probably want to leave this box checked, and instead [show the frame](#general-showIframeOnWebsites) on specific websites.</VueMarkdown>
+                            You probably want to leave this box checked, and instead [show the frame](#general-showIframeOnWebsites-wrapper) on specific websites.</VueMarkdown>
                         </label>
                       </div>
 
-                      <div class="field is-horizontal option is-marginless">
+                      <div id="general-showIframeOnWebsites-wrapper" class="field is-horizontal option is-marginless" style="padding: 8px 0;">
                         <div id="general-showIframeOnWebsites" class="field-label label" style="margin-top: auto; margin-bottom: auto;">Show frames on specific websites</div>
                         <div class="field-body">
                           <div class="field has-addons">
@@ -210,7 +210,10 @@ export default {
       general: undefined,
       youtube: undefined,
       plex: undefined,
-      isValidIframeWebsite: true
+      isValidIframeWebsite: true,
+      targets: new Set([
+        '#general-showIframeOnWebsites-wrapper'
+      ])
     }
   },
   methods: {
@@ -262,6 +265,19 @@ export default {
       } catch (e) {
         this.isValidIframeWebsite = false
       }
+    },
+    onHashChange (e) {
+      const { location: { hash } } = window
+      const shouldHighlight = this.targets.has(hash)
+      const el = document.querySelector(hash)
+      if (shouldHighlight && el) {
+        el.addEventListener('animationend', function once () {
+          el.removeEventListener('animationend', once)
+          el.classList.remove('target-animate')
+          location.hash = ''
+        })
+        el.classList.add('target-animate')
+      }
     }
   },
   async created () {
@@ -277,6 +293,12 @@ export default {
 
     const plexOpts = await this.getOpts('plex', defaultPlexOpts)
     this.$set(this, 'plex', plexOpts)
+  },
+  mounted () {
+    window.addEventListener('hashchange', this.onHashChange)
+  },
+  beforeDestroy () {
+    window.removeEventListener('hashchange', this.onHashChange)
   }
 }
 </script>
@@ -379,5 +401,16 @@ export default {
   .list-item:not(:last-child) {
     margin-bottom: 12px;
   }
+}
+
+@keyframes focus {
+  0% { border: 4px solid transparent; border-radius: 6px; padding: 4px 0; }
+  10% { border: 4px solid lighten(blue, 30); border-radius: 6px; padding: 4px 0; }
+  100% { border: 4px solid transparent; border-radius: 6px; padding: 4px 0; }
+}
+
+.target-animate {
+  animation: focus 3s normal forwards;
+  animation-iteration-count: 1;
 }
 </style>
