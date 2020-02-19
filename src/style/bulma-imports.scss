@@ -1,7 +1,8 @@
 $primary: #009688;
 @import 'bulma/sass/utilities/_all.sass';
-@import 'bulma/sass/base/helpers.sass';
-@import 'bulma/sass/grid/columns.sass';
+@import 'bulma/sass/base/_all.sass';
+@import 'bulma/sass/grid/_all.sass';
+@import 'bulma/sass/components/level.sass';
 @import 'bulma/sass/components/navbar.sass';
 @import 'bulma/sass/components/tabs.sass';
 @import 'bulma/sass/elements/container.sass';
@@ -9,3 +10,4 @@ $primary: #009688;
 @import 'bulma/sass/elements/box.sass';
 @import 'bulma/sass/form/_all.sass';
 @import 'bulma-slider/src/sass/index.sass';
+@import 'bulma-switch/src/sass/index.sass';

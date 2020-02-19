@@ -21,14 +21,15 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~@/style/bulma-imports.scss';
 
 .list-entry {
   display: inline-flex;
-  padding: 8px !important;
-  height: 32px;
+  padding-top: 12px !important;
+  padding-bottom: 12px !important;
   font-size: 0.9em;
+  border: thin solid lighten(lightgray, 10);
   div {
     vertical-align: middle;
   }

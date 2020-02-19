@@ -13,7 +13,7 @@
     </div>
     <section class="section">
       <div class="container">
-        <div class="columns">
+        <div class="columns is-marginless">
           <div class="column is-full">
             <div class="tabs is-centered is-toggle">
               <ul class="is-paddingless">
@@ -35,7 +35,7 @@
               <div :class="{'is-active': currentTab === 'general'}" data-content="general">
                 <section class="section">
                   <div v-if="general" class="container">
-                    <h3 id="extension-opts" class="title is-3">Detecting Videos</h3>
+                    <h3 id="extension-opts" class="title is-size-3">Detecting Videos</h3>
                     <div class="content">
                       <span class="info">These options come into play when another user loads a video into a room but the video does not load for you.</span>
                       <div class="field option">
@@ -94,7 +94,7 @@
                   </div>
 
                   <div v-if="youtube" class="container">
-                    <h3 id="youtube" class="title is-3">YouTube</h3>
+                    <h3 id="youtube" class="title is-size-3">YouTube</h3>
                     <div class="content">
                       <div class="field option">
                         <label class="checkbox">
@@ -281,7 +281,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import '~@/style/bulma-imports.scss';
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
@@ -325,12 +325,16 @@ export default {
   }
 }
 
+.content:not(last-child) {
+  margin-bottom: 0.5em;
+}
+
 .info {
   margin-top: 4px;
   margin-bottom: 0;
   font-size: 14px;
   color: #6a6a6a;
-  > /deep/ p {
+  p {
     font-size: 14px;
     margin: 0;
   }
@@ -360,10 +364,8 @@ export default {
   input[type='range'] + output {
     margin-left: 12px;
   }
-  input.is-small {
-    @if variable-exists(VUE_APP_MODE) == false {
-      font-size: unset;
-    }
+  .checkbox .label {
+    margin-left: 4px;
   }
 }
 
