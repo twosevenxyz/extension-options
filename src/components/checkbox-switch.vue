@@ -1,22 +1,24 @@
 <template>
   <div class="field">
     <input :id="uuid" type="checkbox" :disabled="disabled" class="switch is-rounded is-outlined is-primary" :checked="checked" @input="$event => $emit('change', $event.target.checked)">
-    <label :for="uuid">{{ label }}</label>
-    <p class="info" v-if="extraInfo">
-      {{ extraInfo }}
-    </p>
+    <label :for="uuid" v-html="label"></label>
+    <VueMarkdown class="info" v-if="info" :source="info"/>
     <slot name="extra"></slot>
   </div>
 </template>
 
 <script>
 import uuidv4 from 'uuid/v4'
+import VueMarkdown from 'vue-markdown'
 
 export default {
   name: 'checkbox-switch',
   model: {
     prop: 'checked',
     event: 'change'
+  },
+  components: {
+    VueMarkdown
   },
   props: {
     uuid: {
@@ -33,7 +35,7 @@ export default {
       type: String,
       required: true
     },
-    extraInfo: {
+    info: {
       type: String,
       default: ''
     },
