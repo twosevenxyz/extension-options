@@ -490,7 +490,7 @@ export default {
 .field {
   .field-label {
     text-align: left;
-    flex-grow: 1.5;
+    flex-grow: 1.7;
     margin-right: 1em;
   }
   input[type='range'].inline-slider {
