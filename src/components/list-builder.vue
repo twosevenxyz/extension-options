@@ -18,7 +18,7 @@
         <VueMarkdown class="info" :source="info"/>
       </div>
     </div>
-    <div class="columns website-list">
+    <div class="columns website-list scroll">
       <div class="column is-one-third">
         <div class="list is-hoverable">
           <div class="list-item" v-for="(entry, $index) in list" :key="$index">
@@ -107,4 +107,8 @@ export default {
 </script>
 
 <style lang="scss">
+.website-list {
+  max-height: 15em;
+  overflow-y: auto;
+}
 </style>

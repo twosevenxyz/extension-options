@@ -409,6 +409,25 @@ export default {
 @import '~@/style/bulma-imports.scss';
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
+.scroll {
+  &::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 50%;
+    margin: 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $primary;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+  }
+  &::-webkit-scrollbar-track-piece {
+    background: darken(#fff, 10);
+    border-radius: 10px;
+  }
+}
+
 #app {
   font-family: 'Roboto', sans-serif;
   font-size: 1.2em;
