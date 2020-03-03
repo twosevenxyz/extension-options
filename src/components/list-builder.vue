@@ -15,7 +15,7 @@
     </div>
     <div class="columns is-marginless option-info">
       <div class="column" style="padding: 0 0 8px 0;">
-        <p class="info" v-html="info"></p>
+        <VueMarkdown class="info" :source="info"/>
       </div>
     </div>
     <div class="columns website-list">
@@ -31,12 +31,14 @@
 </template>
 
 <script>
+import VueMarkdown from 'vue-markdown'
 import ListEntry from './list-entry'
 
 export default {
   name: 'list-builder',
   components: {
-    ListEntry
+    ListEntry,
+    VueMarkdown
   },
   props: {
     name: {
