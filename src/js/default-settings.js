@@ -37,7 +37,11 @@ const defaults = {
     'prettyfast.to',
     'rapidvideo.com'
   ],
-  [general.sameSiteDomains]: [],
+  [general.sameSiteDomains]: [
+    '.netflix.com',
+    '.disneyplus.com',
+    '.hulu.com'
+  ],
   [general.sameSiteOverride]: false,
 
   // Plex
