@@ -124,7 +124,6 @@
 <script>
 /* global twosevenExtLog */
 import VueMarkdown from 'vue-markdown'
-import deepmerge from 'deepmerge'
 import URI from 'urijs'
 import is from 'is_js'
 
@@ -261,14 +260,14 @@ export default {
         storedOpts = defaults
         console.error(e)
       }
-      let finalOpts = storedOpts
-      if (Array.isArray(defaults)) {
-        const result = new Set()
-        ;[...defaults, ...(storedOpts || [])].forEach(result.add, result)
-        finalOpts = [...result]
-      } else if (typeof defaults === 'object') {
-        finalOpts = deepmerge(defaults, storedOpts)
-      }
+      const finalOpts = storedOpts
+      // if (Array.isArray(defaults)) {
+      //   const result = new Set()
+      //   ;[...defaults, ...(storedOpts || [])].forEach(result.add, result)
+      //   finalOpts = [...result]
+      // } else if (typeof defaults === 'object') {
+      //   finalOpts = deepmerge(defaults, storedOpts)
+      // }
       return finalOpts
     },
     async commonUpdate (key, newVal, oldVal) {
