@@ -524,6 +524,9 @@ export default {
   .list-item:not(:last-child) {
     margin-bottom: 12px;
   }
+  .list-item:last-child {
+    padding-bottom: 12px;
+  }
 }
 
 @keyframes focus {

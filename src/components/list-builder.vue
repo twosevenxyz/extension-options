@@ -1,5 +1,5 @@
 <template>
-  <div style="margin-bottom: 1em;">
+  <div style="margin-bottom: 2em;">
     <div :id="`${name}-wrapper`" class="field is-horizontal option is-marginless" style="padding: 8px 0;">
       <div :id="name" class="field-label label" style="margin-top: auto; margin-bottom: auto;" v-html="label"></div>
       <div class="field-body">
@@ -107,7 +107,8 @@ export default {
 </script>
 
 <style lang="scss">
-.website-list {
+.website-list.columns {
+  margin: 1em 0;
   max-height: 15em;
   overflow-y: auto;
 }
