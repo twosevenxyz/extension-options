@@ -40,7 +40,9 @@ const defaults = {
   [general.sameSiteDomains]: [
     '.netflix.com',
     '.disneyplus.com',
-    '.hulu.com'
+    '.hulu.com',
+    '.primevideo.com',
+    '.amazon.com'
   ],
   [general.sameSiteOverride]: false,
 
