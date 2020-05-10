@@ -124,7 +124,6 @@
 <script>
 /* global twosevenExtLog */
 import VueMarkdown from 'vue-markdown'
-import URI from 'urijs'
 import is from 'is_js'
 
 import BulmaMixin from '@/components/bulma-mixin'
@@ -133,6 +132,9 @@ import defaultSettings from '@/js/default-settings'
 import ListBuilder from '@/components/list-builder'
 import Checkbox from '@/components/checkbox'
 import CheckboxSwitch from '@/components/checkbox-switch'
+import Experimental from '@/components/experimental'
+
+import CheckMixin from '@/js/check-mixin'
 
 const browser = window.chrome || window.browser
 
@@ -142,12 +144,13 @@ const tag = '[ext-options]'
 
 export default {
   name: 'app',
-  mixins: [BulmaMixin],
+  mixins: [BulmaMixin, CheckMixin],
   components: {
     VueMarkdown,
     ListBuilder,
     Checkbox, // eslint-disable-line
-    CheckboxSwitch
+    CheckboxSwitch,
+    Experimental
   },
   watch: {
   },
@@ -295,56 +298,6 @@ export default {
       }
       this.addToList(domain, this.settings[SETTINGS.general.sameSiteDomains])
     },
-    checkValidIframeWebsite (value) {
-      if (value === '') {
-        return true
-      }
-      try {
-        let url = value
-        if (!url.startsWith('http')) {
-          url = `http://${url}`
-        }
-        if (!url.includes('.')) {
-          return false
-        }
-        const uri = new URI(url)
-        if (!uri.tld()) {
-          return false
-        }
-        const host = uri.host()
-        const tld = uri.tld()
-        url = uri.toString()
-        const path = url.substring(uri.origin().length)
-        return (host && tld && ['', '/'].includes(path))
-      } catch (e) {
-      }
-      return false
-    },
-    checkValidDomain (value) {
-      if (value === '') {
-        return true
-      }
-      try {
-        let url = value
-        // Technically cookies use domains and not URLs. These start with .
-        if (url.startsWith('.')) {
-          url = url.slice(1)
-        }
-
-        // Add in a https so that URIjs can parse it
-        if (!url.startsWith('http')) {
-          url = `http://${url}`
-        }
-
-        const uri = new URI(url)
-        if (!uri.tld()) {
-          return false
-        }
-        const domain = uri.domain()
-        return !!domain
-      } catch (e) {
-      }
-      return false
     },
     onHashChange (e) {
       const { location: { hash } } = window
@@ -511,10 +464,8 @@ export default {
   }
 }
 
-.experimental {
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: 6px;
+.is-active .experimental {
+  color: white !important;
 }
 
 .has-text-warning {
