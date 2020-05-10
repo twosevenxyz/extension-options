@@ -6,7 +6,9 @@ const keys = {
     showIframeOnWebsites: 'GENERAL_SHOW_IFRAME_ON_WEBSITES',
     loadTopFrameOnWebsites: 'GENERAL_LOAD_TOP_FRAME_ON_WEBSITES',
     sameSiteDomains: 'GENERAL_SAME_SITE_DOMAINS',
-    sameSiteOverride: 'GENERAL_SAME_SITE_OVERRIDE'
+    sameSiteOverride: 'GENERAL_SAME_SITE_OVERRIDE',
+    enableGenericFallback: 'GENERAL_ENABLE_GENERIC_FALLBACK',
+    genericFallbackWebsites: 'GENERAL_GENERIC_FALLBACK_WEBSITES'
   },
   plex: {
     forceWAN: 'PLEX_FORCE_WAN',
@@ -45,6 +47,10 @@ const defaults = {
     '.amazon.com'
   ],
   [general.sameSiteOverride]: false,
+  [general.enableGenericFallback]: false,
+  [general.genericFallbackWebsites]: [
+    'criterionchannel.com'
+  ],
 
   // Plex
   [plex.forceWAN]: true,

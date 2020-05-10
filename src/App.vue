@@ -26,6 +26,9 @@
                 <li :class="{'is-active': currentTab === 'crunchyroll'}" data-target="crunchyroll" @click="currentTab = 'crunchyroll'">
                   <a>Crunchyroll</a>
                 </li>
+                <li :class="{'is-active': currentTab === 'generic-fallback'}" data-target="generic-fallback" @click="currentTab = 'generic-fallback'">
+                  <a>Generic Fallback <Experimental/></a>
+                </li>
               </ul>
             </div>
           </div>
@@ -113,6 +116,15 @@
               <div :class="{'is-active': currentTab === 'crunchyroll'}" data-content="crunchyroll">
                 <CheckboxSwitch v-model="settings[SETTINGS.crunchyroll.forceHardSub]" label="Use hardsub streams over subtitles" info="Hardsub streams are videos with subtitles burned into the video. Use this when subtitles are not detected or if they're not working correctly"/>
               </div>
+
+              <!-- Generic fallback -->
+              <div :class="{'is-active': currentTab === 'generic-fallback'}" data-content="generic-fallback">
+                <section class="section">
+                  <div class="container">
+                    <GenericFallback :settings="settings" :keys="SETTINGS" @add-generic-fallback-website="addGenericFallbackWebsite"/>
+                  </div>
+                </section>
+              </div>
             </div>
           </div>
         </div>
@@ -133,6 +145,7 @@ import ListBuilder from '@/components/list-builder'
 import Checkbox from '@/components/checkbox'
 import CheckboxSwitch from '@/components/checkbox-switch'
 import Experimental from '@/components/experimental'
+import GenericFallback from '@/components/generic-fallback'
 
 import CheckMixin from '@/js/check-mixin'
 
@@ -150,7 +163,8 @@ export default {
     ListBuilder,
     Checkbox, // eslint-disable-line
     CheckboxSwitch,
-    Experimental
+    Experimental,
+    GenericFallback
   },
   watch: {
   },
@@ -298,6 +312,8 @@ export default {
       }
       this.addToList(domain, this.settings[SETTINGS.general.sameSiteDomains])
     },
+    addGenericFallbackWebsite (website) {
+      this.addToList(website, this.settings[SETTINGS.general.genericFallbackWebsites])
     },
     onHashChange (e) {
       const { location: { hash } } = window
