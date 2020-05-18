@@ -47,7 +47,7 @@ const defaults = {
     '.amazon.com'
   ],
   [general.sameSiteOverride]: false,
-  [general.enableGenericFallback]: false,
+  [general.enableGenericFallback]: true,
   [general.genericFallbackWebsites]: [
     'criterionchannel.com'
   ],
