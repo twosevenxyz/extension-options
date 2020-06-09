@@ -49,7 +49,8 @@ const defaults = {
   [general.sameSiteOverride]: false,
   [general.enableGenericFallback]: true,
   [general.genericFallbackWebsites]: [
-    'criterionchannel.com'
+    'criterionchannel.com',
+    'dcuniverse.com'
   ],
 
   // Plex
