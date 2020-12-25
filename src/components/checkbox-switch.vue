@@ -48,6 +48,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.field {
+  margin: 8px 0;
+}
 .switch + label {
   &:before, &:after {
     outline: none !important;
