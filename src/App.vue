@@ -41,6 +41,15 @@
               <div :class="{'is-active': currentTab === 'general'}" data-content="general">
                 <section class="section">
                   <div class="container">
+
+                    <h3 id="loading-videos" class="title is-size-3">Loading Videos</h3>
+                    <div class="content">
+                      <div style="margin-bottom: 1em;">
+                        <span class="info">These options come into play when you are loading a video into a room from another tab.</span>
+                      </div>
+                      <CheckboxSwitch v-model="settings[SETTINGS.general.allowCookies]" :label="allowCookiesLabel" :info="allowCookiesInfo"/>
+                    </div>
+
                     <h3 id="extension-opts" class="title is-size-3">Detecting Videos</h3>
                     <div class="content">
                       <span class="info">These options come into play when another user loads a video into a room but the video does not load for you.</span>
@@ -210,6 +219,13 @@ export default {
       return `The Plex website periodically pokes and prods (pings) your Plex Media Server to keep the current video transcoding session alive.
         If the session terminates, then the video will stop playing. The session normally closes within ~10 minutes of closing the Plex website. By checking this box, you're asking TwoSeven to try and keep the session alive.
         If you're having issues where the Plex video is buffering for long periods, disable this option and instead keep the Plex tab open while watching the video on twoseven.`
+    },
+    allowCookiesLabel () {
+      return 'Share cookies with other participants when loading videos from the Web'
+    },
+    allowCookiesInfo () {
+      return `Consider using this option if videos from some websites are not loading for other participants.
+      <span class="has-text-danger">Only enable this if you trust everyone in your rooms.</span>`
     },
     is () {
       return is

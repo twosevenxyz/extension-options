@@ -1,6 +1,7 @@
 
 const keys = {
   general: {
+    allowCookies: 'GENERAL_ALLOW_COOKIES',
     mediaSearchDurationSec: 'GENERAL_MEDIA_SEARCH_DURATION_SEC',
     hideSearchIframe: 'GENERAL_HIDE_SEARCH_IFRAME',
     showIframeOnWebsites: 'GENERAL_SHOW_IFRAME_ON_WEBSITES',
@@ -32,6 +33,7 @@ const keys = {
 const { general, plex, crunchyroll } = keys
 
 const defaults = {
+  [general.allowCookies]: false,
   [general.mediaSearchDurationSec]: 15,
   [general.hideSearchIframe]: true,
   [general.showIframeOnWebsites]: [],
