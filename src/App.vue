@@ -194,13 +194,13 @@ export default {
     },
     plexForceWANInfo () {
       return `Sometimes, Plex may connect to your Plex Media Server (PMS) using a LAN IP. If this occurs, everyone outside of your LAN will not be able
-        to connect or watch the video together on TwoSeven. <br>
+        to connect or watch the video together on TwoSeven.
         Check this box to ensure that all connections to your Plex Media Server happen using its WAN (internet) IP address.`
     },
     plexAllowDirectPlayInfo () {
       return `By default, TwoSeven forces Plex to transcode all files; even the ones that can be played directly (since they're in MP4 format).
-      This is done to ensure that your Plex Token is not leaked to the other participants in the room. <br>
-      <span class="has-text-danger">Check this box if you fully trust everyone you're watching the video with and want high-quality rather than high-security. </span> <br>
+      This is done to ensure that your Plex Token is not leaked to the other participants in the room.
+      <span class="has-text-danger">Check this box if you fully trust everyone you're watching the video with and want high-quality rather than high-security. </span>
       Uncheck this box if you want to ensure full security of your token.`
     },
     plexEnableSessionPingLabel () {
@@ -208,11 +208,8 @@ export default {
     },
     plexEnableSessionPingInfo () {
       return `The Plex website periodically pokes and prods (pings) your Plex Media Server to keep the current video transcoding session alive.
-        If the session terminates, then the video will stop playing.
-        The session normally closes within ~10 minutes of closing the Plex website. <br>
-        By checking this box, you're asking TwoSeven to try and keep the session alive. <br>
-        If you're having issues where the Plex video is buffering for long periods, disable this option and instead keep the Plex tab open while watching
-        the video on twoseven.`
+        If the session terminates, then the video will stop playing. The session normally closes within ~10 minutes of closing the Plex website. By checking this box, you're asking TwoSeven to try and keep the session alive.
+        If you're having issues where the Plex video is buffering for long periods, disable this option and instead keep the Plex tab open while watching the video on twoseven.`
     },
     is () {
       return is
@@ -275,7 +272,7 @@ export default {
         storedOpts = (await PolyfilledStorage.local.get([key]))[key]
       } catch (e) {
         storedOpts = defaults
-        console.error(e)
+        console.error(e) // eslint-disable-line no-console
       }
       const finalOpts = storedOpts
       // if (Array.isArray(defaults)) {
