@@ -39,7 +39,8 @@ const defaults = {
   [general.showIframeOnWebsites]: [],
   [general.loadTopFrameOnWebsites]: [
     'prettyfast.to',
-    'rapidvideo.com'
+    'rapidvideo.com',
+    'drive.google.com'
   ],
   [general.sameSiteDomains]: [
     '.netflix.com',
