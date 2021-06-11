@@ -40,7 +40,8 @@ const defaults = {
   [general.loadTopFrameOnWebsites]: [
     'prettyfast.to',
     'rapidvideo.com',
-    'drive.google.com'
+    'drive.google.com',
+    'wcoforever.com'
   ],
   [general.sameSiteDomains]: [
     '.netflix.com',
