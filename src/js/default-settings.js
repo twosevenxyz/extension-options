@@ -54,7 +54,8 @@ const defaults = {
   [general.enableGenericFallback]: true,
   [general.genericFallbackWebsites]: [
     'criterionchannel.com',
-    'dcuniverse.com'
+    'dcuniverse.com',
+    'viki.com'
   ],
 
   // Plex
