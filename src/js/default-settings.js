@@ -48,7 +48,8 @@ const defaults = {
     '.disneyplus.com',
     '.hulu.com',
     '.primevideo.com',
-    '.amazon.com'
+    '.amazon.com',
+    '.paramountplus.com'
   ],
   [general.sameSiteOverride]: false,
   [general.enableGenericFallback]: true,
