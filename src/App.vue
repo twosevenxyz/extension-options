@@ -23,9 +23,6 @@
                 <li :class="{'is-active': currentTab === 'plex'}" data-target="plex" @click="currentTab = 'plex'">
                   <a>Plex</a>
                 </li>
-                <li :class="{'is-active': currentTab === 'crunchyroll'}" data-target="crunchyroll" @click="currentTab = 'crunchyroll'">
-                  <a>Crunchyroll</a>
-                </li>
                 <li :class="{'is-active': currentTab === 'generic-fallback'}" data-target="generic-fallback" @click="currentTab = 'generic-fallback'">
                   <a>Generic Fallback <Experimental/></a>
                 </li>
@@ -119,11 +116,6 @@
                     <CheckboxSwitch v-model="settings[SETTINGS.plex.enableSessionPing]" :label="plexEnableSessionPingLabel" :info="plexEnableSessionPingInfo"/>
                   </div>
                 </section>
-              </div>
-
-              <!-- Crunchyroll -->
-              <div :class="{'is-active': currentTab === 'crunchyroll'}" data-content="crunchyroll">
-                <CheckboxSwitch v-model="settings[SETTINGS.crunchyroll.forceHardSub]" label="Use hardsub streams over subtitles" info="Hardsub streams are videos with subtitles burned into the video. Use this when subtitles are not detected or if they're not working correctly"/>
               </div>
 
               <!-- Generic fallback -->
