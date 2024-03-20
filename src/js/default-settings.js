@@ -49,7 +49,8 @@ const defaults = {
     '.hulu.com',
     '.primevideo.com',
     '.amazon.com',
-    '.paramountplus.com'
+    '.paramountplus.com',
+    '.crunchyroll.com'
   ],
   [general.sameSiteOverride]: false,
   [general.enableGenericFallback]: true,
